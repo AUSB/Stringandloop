@@ -422,3 +422,78 @@ public class SumDiv7_Array
 
     }
 }
+
+
+
+public class SumDiv7_Coll
+{
+    private int population;  // population size
+    private int sample;  // sample size
+    private Random rng;
+    private int count;  // count of samples meeting criterion
+    private Set<Integer> bag;  // random sample set
+
+    public SumDiv7_Coll(int population, double samplingPercentage)
+    {
+        this.population = population;
+        this.sample = (int) (population * samplingPercentage);
+        this.rng = new Random();
+        this.count = 0;
+        this.bag = new TreeSet<Integer>();  // create set; can use HashSet instead of TreeSet
+    }
+
+    public void simulate()
+    {
+        for (int i = 0; i < this.sample; i++)
+        {
+            // pick a distinct int from population
+            // if it fits the criterion, count it
+            int n = pickDistinct();
+            this.bag.add(n); // add sample to set
+            int sum = digitSum(n);
+            if (sum % 7 == 0) this.count++;  // if it meets criterion, count it
+        }
+    }
+
+    private int pickDistinct()
+    {
+        int n;
+        do
+        {
+            n = 1 + rng.nextInt(this.population);
+        } while (this.bag.contains(n));  // note that contains is provided by Set<>
+        return n;
+    }
+
+    // return the sum of the digits of x
+    private int digitSum(int x)
+    {
+        int sum = 0;
+        for (int r = x; r != 0; r = r / 10)
+        {
+            int digit = r % 10;
+            sum += digit;
+        }
+        return sum;
+    }
+
+    public static void main(String[] args)
+    {
+        long start = (new Date()).getTime();
+
+        SumDiv7_Coll var = new SumDiv7_Coll(1000000, .1);
+        var.simulate();
+        System.out.println("Probalility of meeting criterion is " + var.count / (double) var.sample);
+        System.out.println("Sample is ");
+        for (int e : var.bag)  // uses extended for syntax to traverse the set
+        {
+            System.out.print(e + " ");
+        }
+
+        long finish = (new Date()).getTime();
+
+        System.out.println("\nRunning time was " + (finish-start) + " ms.");
+
+
+    }
+}
