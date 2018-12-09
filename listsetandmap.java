@@ -1,3 +1,12 @@
+Given	a	long	sentence,	find	all	its	words;	the	dis6nct	
+ones	(regardless	of	case);	display	them;	sort	them;	
+and	then	locate	the	longest	and	most	frequent	ones.
+14	
+A	"word"	is	defined	as	a	sequence	of	characters	terminated	by	
+space,	punctua6on,	or	end-of-string.		
+1. Use	split	with	a	regex	
+2. Turn	array	to	a	collec
+
 package com.example.practice;
 
 import java.util.*;
